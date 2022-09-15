@@ -119,3 +119,62 @@ form input {
   border: none;
   border-radius: 5px;
 }
+
+/* filter */
+
+.photograph-media {
+  margin: 0 100px;
+}
+
+.photograph-media .filter {
+  margin-top: 20px;
+}
+
+.photograph-media .filter .dropdown {
+  margin: 0;
+  padding: 0;
+}
+
+.photograph-media .filter .dropdown-item {
+  width: 170px;
+  height: 51px;
+  background-color: #901c1c;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.photograph-media .filter .dropdown-item i {
+  margin-left: 26px;
+}
+
+.photograph-media .filter .dropdown .selected {
+  border-radius: 5px;
+}
+
+.item-2 {
+  border-radius: 0;
+  transform: translateY(-90px);
+  visibility: hidden;
+}
+
+.item-3 {
+  border-radius: 0 0 5px 5px;
+  transform: translateY(-90px);
+  visibility: hidden;
+}
+
+.show-dropdown {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.selected-bradius {
+  border-radius: 5px 5px 0 0 !important;
+}

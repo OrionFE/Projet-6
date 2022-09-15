@@ -1,6 +1,5 @@
 // Mettre le code JavaScript lié à la page photographer.html
 const id = localStorage.getItem("id")
-console.log(`photographe${id}`)
 
 let photographer = []
 let media = []
@@ -10,15 +9,12 @@ export async function getAllInformation() {
   await fetch("../../data/photographers.json")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       photographer = data.photographers
       media = data.media
     })
 
   photographer = photographer.filter((person) => person.id == id)
-  console.log(photographer)
   media = media.filter((person) => person.photographerId == id)
-  console.log(media)
 }
 
 // display data
@@ -50,6 +46,38 @@ function displayPhotographe() {
   divText.appendChild(description)
   divImg.appendChild(img)
 }
+
+// animation dropdown
+
+const dropdownBtn = document.querySelector(".selected")
+const item2 = document.querySelector(".item-2")
+const item3 = document.querySelector(".item-3")
+
+function animationDropdown() {
+  dropdownBtn.classList.toggle("selected-bradius")
+  item2.classList.toggle("show-dropdown")
+  item3.classList.toggle("show-dropdown")
+}
+
+dropdownBtn.addEventListener("click", animationDropdown)
+
+// replace filter value
+
+const dropdownItem = [item2, item3]
+const textSelected = document.querySelector(".text-selected")
+
+dropdownItem.forEach((item) => {
+  item.addEventListener("click", () => {
+    console.log(item.innerText)
+    console.log(textSelected)
+    const temp = textSelected.innerText
+    textSelected.innerText = item.innerText
+    item.innerText = temp
+    animationDropdown()
+  })
+})
+
+// init
 
 window.addEventListener("load", async () => {
   await getAllInformation()
