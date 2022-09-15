@@ -38,6 +38,11 @@ h1 {
   flex-direction: column;
 }
 
+.photographer_section article a {
+  text-align: center;
+  text-decoration: none;
+}
+
 .photographer_section article h2 {
   color: #d3573c;
   font-size: 36px;
