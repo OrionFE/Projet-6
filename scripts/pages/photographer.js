@@ -1,5 +1,4 @@
 // Mettre le code JavaScript lié à la page photographer.html
-
 const id = localStorage.getItem("id")
 console.log(`photographe${id}`)
 
@@ -27,21 +26,29 @@ export async function getAllInformation() {
 function displayPhotographe() {
   const { name, city, country, tagline, portrait } = photographer[0]
 
-  const header = document.querySelector("header")
+  const photographeHeader = document.querySelector(".photograph-header")
 
+  const divText = document.createElement("div")
+  divText.classList.add("container-text")
   const h1 = document.createElement("h1")
   h1.innerText = name
   const location = document.createElement("p")
+  location.classList.add("location")
   location.innerText = `${city} , ${country}`
   const description = document.createElement("p")
+  description.classList.add("description")
   description.innerText = tagline
   const img = document.createElement("img")
   img.setAttribute("src", `assets/photographers/${portrait}`)
+  const divImg = document.createElement("div")
+  divImg.classList.add("container-img")
 
-  header.appendChild(h1)
-  header.appendChild(location)
-  header.appendChild(description)
-  header.appendChild(img)
+  photographeHeader.appendChild(divText)
+  photographeHeader.appendChild(divImg)
+  divText.appendChild(h1)
+  divText.appendChild(location)
+  divText.appendChild(description)
+  divImg.appendChild(img)
 }
 
 window.addEventListener("load", async () => {
