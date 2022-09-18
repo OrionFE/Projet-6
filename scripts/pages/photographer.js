@@ -131,9 +131,11 @@ function displayMedia() {
   gallery.innerHTML = ""
 
   const arrayToDisplay = sortPhoto()
+  let pricePhotograph
 
   arrayToDisplay.map((item) => {
-    const { image, video, title, likes } = item
+    const { image, video, title, likes, price } = item
+    pricePhotograph = price
     const idPhoto = item.id
     const srcImg = photographer[0].name
     const srcImgFirstName = srcImg.split(" ")[0]
@@ -143,7 +145,7 @@ function displayMedia() {
     const imgTitleText = document.createElement("div")
     imgTitleText.innerText = title
 
-    // like
+    // like ---------
 
     const spanNbLike = document.createElement("span")
     const locStorageIdPhoto = localStorage.getItem(`id-${idPhoto}`)
@@ -153,6 +155,8 @@ function displayMedia() {
     } else {
       spanNbLike.innerHTML = `<p class="counter-like">${locStorageIdPhoto}</p><i class="fa-solid fa-heart"></i>`
     }
+
+    // ----------
 
     const article = document.createElement("article")
     article.classList.add("photo-card")
@@ -175,6 +179,27 @@ function displayMedia() {
     divDescriptionImg.appendChild(imgTitleText)
     divDescriptionImg.appendChild(spanNbLike)
   })
+
+  const sectionPriceAndLike = document.createElement("div")
+  sectionPriceAndLike.classList.add("price-and-like")
+
+  const sumOfLike = arrayToDisplay.reduce(
+    (total, obj) => Number(obj.likes) + total,
+    0
+  )
+
+  const divLike = document.createElement("p")
+  divLike.classList.add("sum-of-like")
+  divLike.innerHTML = `${sumOfLike} <i class="fa-solid fa-heart"></i>`
+
+  const divPrice = document.createElement("p")
+  divPrice.classList.add("price")
+  divPrice.innerText = `${pricePhotograph}€ / jour`
+
+  const photographMedia = document.querySelector(".photograph-media")
+  photographMedia.appendChild(sectionPriceAndLike)
+  sectionPriceAndLike.appendChild(divLike)
+  sectionPriceAndLike.appendChild(divPrice)
 }
 
 // like incrementation
