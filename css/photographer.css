@@ -178,3 +178,67 @@ form input {
 .selected-bradius {
   border-radius: 5px 5px 0 0 !important;
 }
+
+/* gallery photo  */
+
+.photograph-media {
+  margin: 0 100px;
+}
+
+.photograph-gallery {
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 12.5%;
+}
+
+.photograph-gallery article {
+  width: 25%;
+  margin-bottom: 30px;
+}
+
+.photograph-gallery img,
+video {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.description-img {
+  display: flex;
+  align-items: center;
+  color: #901c1c;
+  font-size: 24px;
+  height: 50px;
+}
+
+.description-img span {
+  width: 20%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.description-img > div {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.counter-like {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.description-img .fa-heart {
+  cursor: pointer;
+}
+
+.description-img .fa-heart:hover {
+  transform: scale(1.25);
+  transition: 200ms ease-in-out;
+  color: #d3573c;
+}

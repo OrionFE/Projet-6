@@ -62,11 +62,12 @@ h1 {
   line-height: 20px;
 }
 
-.photographer_section article :nth-child(3) {
-  color: #901c1c;
+.photographer_section article p:nth-child(2) {
   font-size: 13px;
+  color: #901c1c;
 }
 
-.photographer_section article :nth-child(5) {
+.photographer_section article p:nth-child(4) {
+  font-size: 9px;
   color: #757575;
 }

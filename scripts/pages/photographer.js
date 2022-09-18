@@ -17,7 +17,7 @@ export async function getAllInformation() {
   media = media.filter((person) => person.photographerId == id)
 }
 
-// display data
+// display data header
 
 function displayPhotographe() {
   const { name, city, country, tagline, portrait } = photographer[0]
@@ -68,8 +68,6 @@ const textSelected = document.querySelector(".text-selected")
 
 dropdownItem.forEach((item) => {
   item.addEventListener("click", () => {
-    console.log(item.innerText)
-    console.log(textSelected)
     const temp = textSelected.innerText
     textSelected.innerText = item.innerText
     item.innerText = temp
@@ -77,9 +75,87 @@ dropdownItem.forEach((item) => {
   })
 })
 
+// display data media
+function displayMedia() {
+  const gallery = document.querySelector(".photograph-gallery")
+
+  media.map((item) => {
+    const { image, video, title, likes } = item
+    const idPhoto = item.id
+    const srcImg = photographer[0].name
+    const srcImgFirstName = srcImg.split(" ")[0]
+
+    const divDescriptionImg = document.createElement("div")
+    divDescriptionImg.classList.add("description-img")
+    const imgTitleText = document.createElement("div")
+    imgTitleText.innerText = title
+
+    // like
+
+    const spanNbLike = document.createElement("span")
+    const locStorageIdPhoto = localStorage.getItem(`id-${idPhoto}`)
+
+    if (!locStorageIdPhoto) {
+      spanNbLike.innerHTML = `<p class="counter-like">${likes}</p><i class="fa-solid fa-heart"></i>`
+    } else {
+      spanNbLike.innerHTML = `<p class="counter-like">${locStorageIdPhoto}</p><i class="fa-solid fa-heart"></i>`
+    }
+
+    const article = document.createElement("article")
+    article.classList.add("photo-card")
+    article.classList.add(`id-${idPhoto}`)
+    gallery.appendChild(article)
+
+    if (image !== undefined) {
+      const img = document.createElement("img")
+      img.setAttribute("src", `../../assets/images/${srcImgFirstName}/${image}`)
+      article.appendChild(img)
+    } else {
+      const videoDiv = document.createElement("video")
+      videoDiv.src = `../../assets/images/${srcImgFirstName}/${video}#t=0.5`
+      videoDiv.controls = true
+      videoDiv.preload = "metadata"
+      article.appendChild(videoDiv)
+    }
+
+    article.appendChild(divDescriptionImg)
+    divDescriptionImg.appendChild(imgTitleText)
+    divDescriptionImg.appendChild(spanNbLike)
+  })
+}
+
+// like incrementation
+
+function likeCount() {
+  // select article
+  const photoCardArray = [...document.querySelectorAll(".photo-card")]
+
+  photoCardArray.forEach((card) => {
+    const cardIdPhoto = card.getAttribute("class").split(" ")[1]
+    const heart = document.querySelector(`.${cardIdPhoto} .fa-heart`)
+
+    heart.addEventListener("click", () => {
+      let locStorageIdPhoto = localStorage.getItem(`${cardIdPhoto}`)
+      const numberOfLike = document.querySelector(
+        `.${cardIdPhoto} .counter-like`
+      )
+      const baseLike = numberOfLike.innerText
+
+      // creer et/ou incremente
+      localStorage.setItem(`${cardIdPhoto}`, `${Number(baseLike) + 1}`)
+      // refresh valeur du localstorage
+      locStorageIdPhoto = localStorage.getItem(`${cardIdPhoto}`)
+      // show new value
+      numberOfLike.innerText = locStorageIdPhoto
+    })
+  })
+}
+
 // init
 
 window.addEventListener("load", async () => {
   await getAllInformation()
   displayPhotographe()
+  displayMedia()
+  likeCount()
 })
