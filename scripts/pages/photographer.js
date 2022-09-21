@@ -204,6 +204,8 @@ function displayMedia() {
   photographMedia.appendChild(sectionPriceAndLike)
   sectionPriceAndLike.appendChild(divLike)
   sectionPriceAndLike.appendChild(divPrice)
+
+  openLightbox()
 }
 
 // like incrementation
