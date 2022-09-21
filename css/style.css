@@ -71,19 +71,3 @@ h1 {
   font-size: 9px;
   color: #757575;
 }
-
-.price-and-like {
-  height: 70px;
-  width: 342px;
-  border-radius: 5px 5px 0 0;
-  background: #db8876;
-  position: sticky;
-  bottom: 0;
-  left: 75%;
-
-  display: flex;
-  font-size: 24px;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 34px;
-}

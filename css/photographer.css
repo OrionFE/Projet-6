@@ -186,8 +186,6 @@ form input {
 }
 
 .photograph-gallery {
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr); */
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -204,6 +202,9 @@ video {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  cursor: pointer;
+  transition: all 500ms;
+  will-change: transform;
 }
 
 .description-img {
@@ -214,6 +215,11 @@ video {
   height: 50px;
 }
 
+.photograph-gallery img:hover,
+video:hover {
+  transform: scale(1.1);
+}
+
 .description-img span {
   width: 20%;
   display: flex;
@@ -221,7 +227,7 @@ video {
   align-items: center;
 }
 
-.description-img > div {
+.description-img > p {
   width: 80%;
   white-space: nowrap;
   overflow: hidden;
@@ -235,10 +241,100 @@ video {
 
 .description-img .fa-heart {
   cursor: pointer;
+  transition: all 200ms ease-in-out;
 }
 
 .description-img .fa-heart:hover {
   transform: scale(1.25);
-  transition: 200ms ease-in-out;
   color: #d3573c;
+}
+
+.price-and-like {
+  height: 70px;
+  width: 342px;
+  border-radius: 5px 5px 0 0;
+  background: #db8876;
+  position: sticky;
+  bottom: 0;
+  left: 75%;
+
+  display: flex;
+  font-size: 24px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 34px;
+}
+
+.lightbox-photo {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  height: 100vh;
+  width: 100%;
+  background: white;
+  display: none;
+}
+
+.lightbox-photo .fa-solid {
+  color: #901c1c;
+  position: absolute;
+  transition: all 500ms;
+  cursor: pointer;
+}
+
+.lightbox-photo .fa-xmark {
+  top: 50px;
+  right: 50px;
+}
+
+.lightbox-photo .fa-chevron-left {
+  top: 50%;
+  left: 50px;
+}
+
+.lightbox-photo .fa-chevron-right {
+  top: 50%;
+  right: 50px;
+}
+
+.lightbox-photo .fa-solid:hover {
+  transform: scale(1.2);
+  color: #d3573c;
+}
+
+.lightbox-photo img,
+.lightbox-photo video {
+  position: absolute;
+  width: 75%;
+  height: 85%;
+  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lightbox-photo .description-img span {
+  display: none;
+}
+
+.lightbox-photo p {
+  position: absolute;
+  bottom: 0;
+  left: 12.5%;
+  width: 50%;
+  font-size: 24px;
+  color: #901c1c;
+}
+
+.disable-click {
+  color: #c4c4c4 !important;
+  pointer-events: none;
+}
+
+.disable-click:hover {
+  transform: scale(1) !important;
+}
+
+.stop-scrolling {
+  overflow-y: hidden;
 }

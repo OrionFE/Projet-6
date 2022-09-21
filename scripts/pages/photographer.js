@@ -142,7 +142,7 @@ function displayMedia() {
 
     const divDescriptionImg = document.createElement("div")
     divDescriptionImg.classList.add("description-img")
-    const imgTitleText = document.createElement("div")
+    const imgTitleText = document.createElement("p")
     imgTitleText.innerText = title
 
     // like ---------
@@ -197,6 +197,10 @@ function displayMedia() {
   divPrice.innerText = `${pricePhotograph}€ / jour`
 
   const photographMedia = document.querySelector(".photograph-media")
+  const resetPriceAndLike = document.querySelector(".price-and-like")
+  if (resetPriceAndLike) {
+    photographMedia.removeChild(resetPriceAndLike)
+  }
   photographMedia.appendChild(sectionPriceAndLike)
   sectionPriceAndLike.appendChild(divLike)
   sectionPriceAndLike.appendChild(divPrice)
@@ -261,6 +265,111 @@ dropdownItem.forEach((item) => {
   })
 })
 
+// lightbox photo
+const body = document.querySelector("body")
+const lightboxPhoto = document.querySelector(".lightbox-photo")
+const lightboxContent = document.querySelector(".lightbox-content")
+const exitBtn = document.querySelector(".lightbox-photo .fa-xmark")
+const nextBtn = document.getElementById("next")
+const prevBtn = document.getElementById("previous")
+let content
+
+function displayContentSlider(content) {
+  // reset lightboxContent
+  lightboxContent.innerText = ""
+
+  // clone the content
+  const contentClone = content.cloneNode(true)
+
+  // get the img to display
+  const img = contentClone.firstChild
+  lightboxContent.appendChild(img)
+
+  // get the title to display
+  const title = contentClone.firstChild
+  lightboxContent.appendChild(title)
+
+  // disable scroll
+  body.classList.add("stop-scrolling")
+
+  // if next content doesn't exist then disable button next
+
+  if (!content.nextElementSibling) {
+    nextBtn.classList.add("disable-click")
+  }
+
+  // if previous content doesn't exist then disable button prev
+
+  if (!content.previousElementSibling) {
+    prevBtn.classList.add("disable-click")
+  }
+}
+
+function openLightbox() {
+  // get all the article
+  const articles = [...document.querySelectorAll(".photo-card")]
+
+  // get each photo
+  const photos = articles.map((article) => article.firstChild)
+
+  // for each photo
+  photos.forEach((photo) => {
+    photo.addEventListener("click", () => {
+      // show lightbox
+      lightboxPhoto.style.display = "block"
+
+      // content equal to the article of the element clicked
+      content = photo.parentElement
+
+      // execute the function to show the content
+      displayContentSlider(content)
+    })
+  })
+}
+
+function exitLightbox() {
+  exitBtn.addEventListener("click", () => {
+    nextBtn.classList.remove("disable-click")
+    prevBtn.classList.remove("disable-click")
+    lightboxPhoto.style.display = "none"
+
+    // remove stop-scrolling
+    body.classList.remove("stop-scrolling")
+  })
+}
+
+function nextSlide() {
+  content = content.nextElementSibling
+  displayContentSlider(content)
+}
+
+nextBtn.addEventListener("click", () => {
+  // reset previous button disabled
+  prevBtn.classList.remove("disable-click")
+
+  // if next element doesn't exist then disable button next
+  if (!content.nextElementSibling.nextElementSibling) {
+    nextSlide()
+    nextBtn.classList.add("disable-click")
+  } else nextSlide()
+})
+
+function prevSlide() {
+  content = content.previousElementSibling
+  displayContentSlider(content)
+}
+
+prevBtn.addEventListener("click", () => {
+  // reset next button disabled
+  nextBtn.classList.remove("disable-click")
+
+  // if next element doesn't exist then disable button next
+  if (!content.previousElementSibling.previousElementSibling) {
+    prevSlide()
+    prevBtn.classList.add("disable-click")
+  } else prevSlide()
+})
+
 // init
 
 window.addEventListener("load", async () => {
@@ -269,4 +378,6 @@ window.addEventListener("load", async () => {
   sortPhoto()
   displayMedia()
   likeCount()
+  openLightbox()
+  exitLightbox()
 })
