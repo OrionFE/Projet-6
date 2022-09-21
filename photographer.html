@@ -58,11 +58,28 @@
           <h2>Contactez-moi</h2>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
-        <form>
-          <div>
-            <label>Prénom</label>
-            <input />
+        <form novalidate>
+          <div class="input-container">
+            <label for="first-name">Prénom</label>
+            <input id="first-name" type="text" minlength="2" required />
+            <p class="error-message"></p>
           </div>
+          <div class="input-container">
+            <label for="last-name">Nom</label>
+            <input id="last-name" type="text" minlength="2" required />
+            <p class="error-message"></p>
+          </div>
+          <div class="input-container">
+            <label for="email">Email</label>
+            <input id="email" type="email" required />
+            <p class="error-message"></p>
+          </div>
+          <div class="input-container">
+            <label for="message">Votre message</label>
+            <textarea id="message" required> </textarea>
+            <p class="error-message"></p>
+          </div>
+
           <button class="contact_button">Envoyer</button>
         </form>
       </div>
