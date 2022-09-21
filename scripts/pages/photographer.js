@@ -298,12 +298,14 @@ function displayContentSlider(content) {
 
   if (!content.nextElementSibling) {
     nextBtn.classList.add("disable-click")
+    document.removeEventListener("keydown", arrowRight)
   }
 
   // if previous content doesn't exist then disable button prev
 
   if (!content.previousElementSibling) {
     prevBtn.classList.add("disable-click")
+    document.removeEventListener("keydown", arrowLeft)
   }
 }
 
@@ -325,6 +327,10 @@ function openLightbox() {
 
       // execute the function to show the content
       displayContentSlider(content)
+
+      // arrow event
+      document.addEventListener("keydown", arrowRight)
+      document.addEventListener("keydown", arrowLeft)
     })
   })
 }
@@ -372,6 +378,24 @@ prevBtn.addEventListener("click", () => {
   } else prevSlide()
 })
 
+function arrowRight(e) {
+  if (e.key === "ArrowRight") {
+    nextSlide()
+    // reset previous button disabled
+    prevBtn.classList.remove("disable-click")
+    document.addEventListener("keydown", arrowLeft)
+  }
+}
+
+function arrowLeft(e) {
+  if (e.key === "ArrowLeft") {
+    prevSlide()
+    // reset next button disabled
+    nextBtn.classList.remove("disable-click")
+    document.addEventListener("keydown", arrowRight)
+  }
+}
+
 // init
 
 window.addEventListener("load", async () => {
@@ -380,6 +404,5 @@ window.addEventListener("load", async () => {
   sortPhoto()
   displayMedia()
   likeCount()
-  openLightbox()
   exitLightbox()
 })
