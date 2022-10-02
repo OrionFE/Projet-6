@@ -1,37 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <title>Fisheye - photographe</title>
   </head>
   <body>
+    <div aria-label="image closeup view" role="dialog" class="lightbox-photo">
+      <i
+        class="fa-solid fa-xmark fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Close dialog"
+      ></i>
+      <i
+        class="fa-solid fa-chevron-left fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Previous image"
+        id="previous"
+      ></i>
+      <i
+        class="fa-solid fa-chevron-right fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Next image"
+        id="next"
+      ></i>
+      <div class="lightbox-content"></div>
+    </div>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="./index.html"
+        ><img src="assets/images/logo.png" alt="Fisheye Home page" class="logo"
+      /></a>
     </header>
     <main id="main">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <div class="container-contact_button">
+          <button type="button" class="contact_button" onclick="displayModal()">
+            Contactez-moi
+          </button>
+        </div>
+      </div>
+
+      <div class="photograph-media">
+        <div class="filter">
+          <p id="label-filter">Filter</p>
+          <ul
+            aria-labelledby="label-filter"
+            aria-expanded="false"
+            role="listbox"
+            aria-haspopup="listbox"
+            class="dropdown"
+            id="dropdown"
+            aria-activedescendant="filter1"
+          >
+            <li
+              id="filter1"
+              role="option"
+              tabindex="0"
+              class="dropdown-item selected"
+            >
+              <span class="text-selected">Popularité</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </li>
+            <li
+              tabindex="0"
+              id="filter2"
+              role="option"
+              class="dropdown-item item-2"
+            >
+              Date
+            </li>
+            <li
+              tabindex="0"
+              id="filter3"
+              role="option"
+              class="dropdown-item item-3"
+            >
+              Titre
+            </li>
+          </ul>
+        </div>
+        <div class="photograph-gallery"></div>
       </div>
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+    <div id="contact_modal" role="dialog" aria-describedby="modal-title">
+      <div class="modal">
+        <header>
+          <h2 id="modal-title">Contactez-moi</h2>
+          <img
+            src="assets/icons/close.svg"
+            alt="Close Contact form"
+            onclick="closeModal()"
+          />
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
-    <script src="/scripts/pages/photographer.js"></script>
+        <form novalidate>
+          <div class="input-container">
+            <label id="first-name-label" for="first-name">Prénom</label>
+            <input
+              id="first-name"
+              type="text"
+              minlength="2"
+              required
+              aria-labelledby="first-name-label"
+              aria-describedby="first-name-label"
+            />
+            <p class="error-message"></p>
+          </div>
+          <div class="input-container">
+            <label id="last-name-label" for="last-name">Nom</label>
+            <input
+              id="last-name"
+              type="text"
+              minlength="2"
+              required
+              aria-labelledby="last-name-label"
+              aria-describedby="last-name-label"
+            />
+            <p class="error-message"></p>
+          </div>
+          <div class="input-container">
+            <label id="email-label" for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              required
+              aria-labelledby="email-label"
+              aria-describedby="email-label"
+            />
+            <p class="error-message"></p>
+          </div>
+          <div class="input-container">
+            <label id="message-label" for="message">Votre message</label>
+            <textarea
+              id="message"
+              required
+              aria-labelledby="message-label"
+              aria-describedby="message-label"
+            >
+            </textarea>
+            <p class="error-message"></p>
+          </div>
+
+          <button type="submit" aria-label="Send" class="contact_button">
+            Envoyer
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>
