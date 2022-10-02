@@ -1,4 +1,17 @@
 // Mettre le code JavaScript lié à la page photographer.html
+window.addEventListener(
+  "keydown",
+  (e) => {
+    if (
+      ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(
+        e.code
+      ) > -1
+    ) {
+      e.preventDefault()
+    }
+  },
+  false
+)
 const id = localStorage.getItem("id")
 
 let photographer = []
@@ -28,7 +41,7 @@ function displayPhotographe() {
   divText.classList.add("container-text")
   const h1 = document.createElement("h1")
   h1.innerText = name
-  const location = document.createElement("p")
+  const location = document.createElement("h2")
   location.classList.add("location")
   location.innerText = `${city} , ${country}`
   const description = document.createElement("p")
@@ -36,6 +49,7 @@ function displayPhotographe() {
   description.innerText = tagline
   const img = document.createElement("img")
   img.setAttribute("src", `assets/photographers/${portrait}`)
+  img.setAttribute("alt", `${name.split(" ")[0]}`)
   const divImg = document.createElement("div")
   divImg.classList.add("container-img")
 
@@ -140,7 +154,7 @@ function displayMedia() {
     const srcImg = photographer[0].name
     const srcImgFirstName = srcImg.split(" ")[0]
 
-    const divDescriptionImg = document.createElement("div")
+    const divDescriptionImg = document.createElement("h3")
     divDescriptionImg.classList.add("description-img")
     const imgTitleText = document.createElement("p")
     imgTitleText.innerText = title
@@ -148,12 +162,13 @@ function displayMedia() {
     // like ---------
 
     const spanNbLike = document.createElement("span")
+    spanNbLike.setAttribute("aria-label", "likes")
     const locStorageIdPhoto = localStorage.getItem(`id-${idPhoto}`)
 
     if (!locStorageIdPhoto) {
-      spanNbLike.innerHTML = `<p class="counter-like">${likes}</p><i class="fa-solid fa-heart"></i>`
+      spanNbLike.innerHTML = `<p class="counter-like">${likes}</p><i class="fa-solid fa-heart" tabindex="0" role="button" aria-pressed="false"></i>`
     } else {
-      spanNbLike.innerHTML = `<p class="counter-like">${locStorageIdPhoto}</p><i class="fa-solid fa-heart"></i>`
+      spanNbLike.innerHTML = `<p class="counter-like">${locStorageIdPhoto}</p><i class="fa-solid fa-heart" tabindex="0" role="button" aria-pressed="false"></i>`
     }
 
     // ----------
@@ -166,12 +181,15 @@ function displayMedia() {
     if (image !== undefined) {
       const img = document.createElement("img")
       img.setAttribute("src", `../../assets/images/${srcImgFirstName}/${image}`)
+      img.setAttribute("alt", `${title}, image closeup view`)
+      img.setAttribute("tabindex", "0")
       article.appendChild(img)
     } else {
       const videoDiv = document.createElement("video")
       videoDiv.src = `../../assets/images/${srcImgFirstName}/${video}#t=0.5`
       videoDiv.controls = true
       videoDiv.preload = "metadata"
+      videoDiv.setAttribute("alt", `${title}, video closeup view`)
       article.appendChild(videoDiv)
     }
 
@@ -218,8 +236,7 @@ function likeCount() {
     const cardIdPhoto = card.getAttribute("class").split(" ")[1]
     const heart = document.querySelector(`.${cardIdPhoto} .fa-heart`)
 
-    heart.addEventListener("click", () => {
-      console.log("i clicked")
+    function likeAdd() {
       let locStorageIdPhoto = localStorage.getItem(`${cardIdPhoto}`)
       const numberOfLike = document.querySelector(
         `.${cardIdPhoto} .counter-like`
@@ -227,16 +244,36 @@ function likeCount() {
       const baseLike = numberOfLike.innerText
 
       // creer et/ou incremente
-      localStorage.setItem(`${cardIdPhoto}`, `${Number(baseLike) + 1}`)
+      if (
+        locStorageIdPhoto &&
+        localStorage.getItem(`clicked-${cardIdPhoto}`) == "true"
+      ) {
+        localStorage.setItem(`${cardIdPhoto}`, `${Number(baseLike) - 1}`)
+        localStorage.setItem(`clicked-${cardIdPhoto}`, "false")
+      } else {
+        localStorage.setItem(`${cardIdPhoto}`, `${Number(baseLike) + 1}`)
+        localStorage.setItem(`clicked-${cardIdPhoto}`, "true")
+      }
       // refresh valeur du localstorage
       locStorageIdPhoto = localStorage.getItem(`${cardIdPhoto}`)
       // show new value
       numberOfLike.innerText = locStorageIdPhoto
+    }
+
+    heart.addEventListener("click", likeAdd)
+    heart.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        likeAdd()
+      }
     })
   })
 }
 
 // animation dropdown
+
+let ariaExpended = document
+  .getElementById("dropdown")
+  .getAttribute("aria-expanded")
 
 const dropdownBtn = document.querySelector(".selected")
 const item2 = document.querySelector(".item-2")
@@ -246,9 +283,60 @@ function animationDropdown() {
   dropdownBtn.classList.toggle("selected-bradius")
   item2.classList.toggle("show-dropdown")
   item3.classList.toggle("show-dropdown")
+
+  // aria
+
+  if (ariaExpended == "true") {
+    ariaExpended = "false"
+  } else if (ariaExpended == "false") {
+    ariaExpended = "true"
+  }
+  document
+    .getElementById("dropdown")
+    .setAttribute("aria-expanded", ariaExpended)
 }
 
+document.getElementById("dropdown").addEventListener("keydown", (e) => {
+  const focusableContents = "#filter1 , .item-2, .item-3"
+  const dropdown = document.getElementById("dropdown")
+
+  const firstFocusableElement = dropdown.querySelectorAll(focusableContents)[0]
+  const secondFocusableElement = dropdown.querySelectorAll(focusableContents)[1]
+  const focusableContent = dropdown.querySelectorAll(focusableContents)
+  const lastFocusableElement = focusableContent[focusableContent.length - 1]
+
+  if (e.key === "ArrowDown") {
+    if (document.activeElement === lastFocusableElement) {
+      firstFocusableElement.focus()
+    } else if (document.activeElement === secondFocusableElement) {
+      lastFocusableElement.focus()
+    } else {
+      secondFocusableElement.focus()
+    }
+  } else if (e.key === "ArrowUp") {
+    if (document.activeElement === firstFocusableElement) {
+      lastFocusableElement.focus()
+    } else if (document.activeElement === secondFocusableElement) {
+      firstFocusableElement.focus()
+    } else {
+      secondFocusableElement.focus()
+    }
+  }
+
+  if (e.key === "Escape") {
+    document.getElementById("dropdown").setAttribute("aria-expanded", "false")
+    dropdownBtn.classList.remove("selected-bradius")
+    item2.classList.remove("show-dropdown")
+    item3.classList.remove("show-dropdown")
+  }
+})
+
 dropdownBtn.addEventListener("click", animationDropdown)
+dropdownBtn.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    animationDropdown()
+  }
+})
 
 // replace filter value
 
@@ -256,7 +344,7 @@ const dropdownItem = [item2, item3]
 const textSelected = document.querySelector(".text-selected")
 
 dropdownItem.forEach((item) => {
-  item.addEventListener("click", () => {
+  function selectedFilter() {
     const temp = textSelected.innerText
     textSelected.innerText = item.innerText
     item.innerText = temp
@@ -264,6 +352,12 @@ dropdownItem.forEach((item) => {
     sortPhoto()
     displayMedia()
     likeCount()
+  }
+  item.addEventListener("click", selectedFilter)
+  item.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      selectedFilter()
+    }
   })
 })
 
@@ -291,6 +385,8 @@ function displayContentSlider(content) {
   const title = contentClone.firstChild
   lightboxContent.appendChild(title)
 
+  img.setAttribute("alt", `${title.firstChild.innerText}`)
+
   // disable scroll
   body.classList.add("stop-scrolling")
 
@@ -309,6 +405,11 @@ function displayContentSlider(content) {
   }
 }
 
+// lightbox
+
+const main = document.querySelector("main")
+const header = document.querySelector("header")
+
 function openLightbox() {
   // get all the article
   const articles = [...document.querySelectorAll(".photo-card")]
@@ -318,9 +419,11 @@ function openLightbox() {
 
   // for each photo
   photos.forEach((photo) => {
-    photo.addEventListener("click", () => {
+    function showLightBox() {
       // show lightbox
       lightboxPhoto.style.display = "block"
+      main.setAttribute("aria-hidden", "true")
+      header.setAttribute("aria-hidden", "true")
 
       // content equal to the article of the element clicked
       content = photo.parentElement
@@ -331,6 +434,13 @@ function openLightbox() {
       // arrow event
       document.addEventListener("keydown", arrowRight)
       document.addEventListener("keydown", arrowLeft)
+    }
+    photo.addEventListener("click", showLightBox)
+
+    photo.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        showLightBox()
+      }
     })
   })
 }
@@ -340,9 +450,24 @@ function exitLightbox() {
     nextBtn.classList.remove("disable-click")
     prevBtn.classList.remove("disable-click")
     lightboxPhoto.style.display = "none"
+    main.setAttribute("aria-hidden", "false")
+    header.setAttribute("aria-hidden", "false")
 
     // remove stop-scrolling
     body.classList.remove("stop-scrolling")
+  })
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      nextBtn.classList.remove("disable-click")
+      prevBtn.classList.remove("disable-click")
+      lightboxPhoto.style.display = "none"
+      main.setAttribute("aria-hidden", "false")
+      header.setAttribute("aria-hidden", "false")
+
+      // remove stop-scrolling
+      body.classList.remove("stop-scrolling")
+    }
   })
 }
 

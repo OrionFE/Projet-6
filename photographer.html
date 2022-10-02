@@ -18,15 +18,32 @@
     <title>Fisheye - photographe</title>
   </head>
   <body>
-    <div class="lightbox-photo">
-      <i class="fa-solid fa-xmark fa-3x"></i>
-      <i class="fa-solid fa-chevron-left fa-3x" id="previous"></i>
-      <i class="fa-solid fa-chevron-right fa-3x" id="next"></i>
+    <div aria-label="image closeup view" role="dialog" class="lightbox-photo">
+      <i
+        class="fa-solid fa-xmark fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Close dialog"
+      ></i>
+      <i
+        class="fa-solid fa-chevron-left fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Previous image"
+        id="previous"
+      ></i>
+      <i
+        class="fa-solid fa-chevron-right fa-3x"
+        tabindex="1"
+        role="button"
+        aria-label="Next image"
+        id="next"
+      ></i>
       <div class="lightbox-content"></div>
     </div>
     <header>
       <a href="./index.html"
-        ><img src="assets/images/logo.png" class="logo"
+        ><img src="assets/images/logo.png" alt="Fisheye Home page" class="logo"
       /></a>
     </header>
     <main id="main">
@@ -40,47 +57,107 @@
 
       <div class="photograph-media">
         <div class="filter">
-          <ul class="dropdown">
-            <li class="dropdown-item selected">
+          <p id="label-filter">Filter</p>
+          <ul
+            aria-labelledby="label-filter"
+            aria-expanded="false"
+            role="listbox"
+            aria-haspopup="listbox"
+            class="dropdown"
+            id="dropdown"
+            aria-activedescendant="filter1"
+          >
+            <li
+              id="filter1"
+              role="option"
+              tabindex="0"
+              class="dropdown-item selected"
+            >
               <span class="text-selected">Popularité</span>
               <i class="fa-solid fa-chevron-down"></i>
             </li>
-            <li class="dropdown-item item-2">Date</li>
-            <li class="dropdown-item item-3">Titre</li>
+            <li
+              tabindex="0"
+              id="filter2"
+              role="option"
+              class="dropdown-item item-2"
+            >
+              Date
+            </li>
+            <li
+              tabindex="0"
+              id="filter3"
+              role="option"
+              class="dropdown-item item-3"
+            >
+              Titre
+            </li>
           </ul>
         </div>
         <div class="photograph-gallery"></div>
       </div>
     </main>
-    <div id="contact_modal">
+    <div id="contact_modal" role="dialog" aria-describedby="modal-title">
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <h2 id="modal-title">Contactez-moi</h2>
+          <img
+            src="assets/icons/close.svg"
+            alt="Close Contact form"
+            onclick="closeModal()"
+          />
         </header>
         <form novalidate>
           <div class="input-container">
-            <label for="first-name">Prénom</label>
-            <input id="first-name" type="text" minlength="2" required />
+            <label id="first-name-label" for="first-name">Prénom</label>
+            <input
+              id="first-name"
+              type="text"
+              minlength="2"
+              required
+              aria-labelledby="first-name-label"
+              aria-describedby="first-name-label"
+            />
             <p class="error-message"></p>
           </div>
           <div class="input-container">
-            <label for="last-name">Nom</label>
-            <input id="last-name" type="text" minlength="2" required />
+            <label id="last-name-label" for="last-name">Nom</label>
+            <input
+              id="last-name"
+              type="text"
+              minlength="2"
+              required
+              aria-labelledby="last-name-label"
+              aria-describedby="last-name-label"
+            />
             <p class="error-message"></p>
           </div>
           <div class="input-container">
-            <label for="email">Email</label>
-            <input id="email" type="email" required />
+            <label id="email-label" for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              required
+              aria-labelledby="email-label"
+              aria-describedby="email-label"
+            />
             <p class="error-message"></p>
           </div>
           <div class="input-container">
-            <label for="message">Votre message</label>
-            <textarea id="message" required> </textarea>
+            <label id="message-label" for="message">Votre message</label>
+            <textarea
+              id="message"
+              required
+              aria-labelledby="message-label"
+              aria-describedby="message-label"
+            >
+            </textarea>
             <p class="error-message"></p>
           </div>
 
-          <button type="submit" class="contact_button">Envoyer</button>
+          <button type="submit" aria-label="Send" class="contact_button">
+            Envoyer
+          </button>
         </form>
       </div>
     </div>

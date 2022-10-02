@@ -35,10 +35,18 @@ function goToPhotographePage() {
   const photographe = Array.from(document.querySelectorAll("article"))
 
   photographe.forEach((card) => {
-    card.addEventListener("click", (e) => {
+    card.firstChild.addEventListener("click", (e) => {
       idPhotographe = e.path[2].className
+
+      if (idPhotographe == "photographer_section") {
+        idPhotographe = e.path[1].className
+      }
       localStorage.setItem("id", idPhotographe)
-      // getAllInformation()
+    })
+
+    card.firstChild.addEventListener("focus", (e) => {
+      idPhotographe = e.path[1].className
+      localStorage.setItem("id", idPhotographe)
     })
   })
 }

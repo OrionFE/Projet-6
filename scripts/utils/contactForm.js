@@ -1,12 +1,47 @@
+// focusable modal
+
+const focusableElements = "input , textarea, button"
+const modal = document.getElementById("contact_modal")
+
+const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]
+const focusableContent = modal.querySelectorAll(focusableElements)
+const lastFocusableElement = focusableContent[focusableContent.length - 1]
+
+document.addEventListener("keydown", (e) => {
+  const isTabPressed = e.key === "tab"
+
+  if (document.activeElement === lastFocusableElement) {
+    firstFocusableElement.focus()
+    e.preventDefault()
+  }
+})
+
+const main = document.querySelector("main")
+const header = document.querySelector("header")
+
 function displayModal() {
   const modal = document.getElementById("contact_modal")
   modal.style.display = "block"
+  main.setAttribute("aria-hidden", "true")
+  header.setAttribute("aria-hidden", "true")
+  firstFocusableElement.focus()
 }
 
 function closeModal() {
   const modal = document.getElementById("contact_modal")
   modal.style.display = "none"
+  main.setAttribute("aria-hidden", "false")
+  header.setAttribute("aria-hidden", "false")
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const modal = document.getElementById("contact_modal")
+    modal.style.display = "none"
+    main.setAttribute("aria-hidden", "false")
+    header.setAttribute("aria-hidden", "false")
+  }
+})
 
 const firstName = document.getElementById("first-name")
 const lastName = document.getElementById("last-name")
@@ -20,10 +55,12 @@ function setError(input, message) {
   input.nextElementSibling.innerText = message
   input.classList.remove("success")
   input.classList.add("error")
+  input.setAttribute("aria-invalid", "true")
 }
 
 function setSuccess(input) {
   input.classList.remove("error")
+  input.setAttribute("aria-invalid", "false")
   input.classList.add("success")
   input.nextElementSibling.innerText = ""
   sendForm++

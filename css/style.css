@@ -1,5 +1,9 @@
 @import url("photographer.css");
 
+[inert] {
+  pointer-events: none;
+}
+
 body {
   font-family: "DM Sans", sans-serif;
   margin: 0;
@@ -41,6 +45,10 @@ h1 {
 .photographer_section article a {
   text-align: center;
   text-decoration: none;
+  width: 200px;
+  height: 200px;
+  border-radius: 999px;
+  z-index: 999;
 }
 
 .photographer_section article h2 {
@@ -54,20 +62,21 @@ h1 {
   width: 200px;
   border-radius: 999px;
   object-fit: cover;
+  z-index: 1;
 }
 
 .photographer_section article p {
-  font-size: 10px;
+  font-size: 15px;
   margin: 0;
   line-height: 20px;
 }
 
 .photographer_section article p:nth-child(2) {
-  font-size: 13px;
+  font-size: 18px;
   color: #901c1c;
 }
 
 .photographer_section article p:nth-child(4) {
-  font-size: 9px;
+  font-size: 14px;
   color: #757575;
 }

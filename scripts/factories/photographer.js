@@ -8,8 +8,10 @@ export default function photographerFactory(data) {
     article.classList.add(id)
     const divLinkPhotographe = document.createElement("a")
     divLinkPhotographe.setAttribute("href", "./photographer.html")
+    divLinkPhotographe.setAttribute("alt", "Lien vers la page du photographe")
     const img = document.createElement("img")
     img.setAttribute("src", picture)
+    img.setAttribute("alt", `${name.split(" ")[0]}`)
     const h2 = document.createElement("h2")
     h2.textContent = name
     const location = document.createElement("p")
@@ -20,7 +22,7 @@ export default function photographerFactory(data) {
     pricetag.innerText = `${price}€/jour`
     article.appendChild(divLinkPhotographe)
     divLinkPhotographe.appendChild(img)
-    divLinkPhotographe.appendChild(h2)
+    article.appendChild(h2)
     article.appendChild(location)
     article.appendChild(description)
     article.appendChild(pricetag)

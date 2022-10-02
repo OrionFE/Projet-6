@@ -156,11 +156,18 @@ form input,
 
 .photograph-media .filter {
   margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.photograph-media .filter p {
+  font-size: 24px;
 }
 
 .photograph-media .filter .dropdown {
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
+  z-index: 998;
 }
 
 .photograph-media .filter .dropdown-item {
@@ -176,6 +183,13 @@ form input,
   padding-left: 20px;
   cursor: pointer;
   list-style: none;
+}
+
+.photograph-media .filter .dropdown-item:hover {
+  background: #d3573c;
+}
+.photograph-media .filter .dropdown-item:focus {
+  background: #d3573c;
 }
 
 .photograph-media .filter .dropdown-item i {
@@ -214,6 +228,7 @@ form input,
 }
 
 .photograph-gallery {
+  margin-top: -50px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -301,6 +316,7 @@ video:hover {
   width: 100%;
   background: white;
   display: none;
+  box-sizing: border-box;
 }
 
 .lightbox-photo .fa-solid {
