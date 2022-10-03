@@ -19,7 +19,7 @@ let media = []
 
 // eslint-disable-next-line import/prefer-default-export
 export async function getAllInformation() {
-  await fetch("/Projet-6/data/photographers.json")
+  await fetch("./../../data/photographers.json")
     .then((response) => response.json())
     .then((data) => {
       photographer = data.photographers

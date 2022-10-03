@@ -4,13 +4,11 @@ async function getPhotographers() {
   // import json
 
   let photographers = []
-  const mediaPhotographers = []
 
-  await fetch("/Projet-6/data/photographers.json")
+  await fetch("./../../data/photographers.json")
     .then((response) => response.json())
     .then((data) => {
       photographers = data.photographers
-      // photographers = data
     })
 
   // et bien retourner le tableau photographers seulement une fois
