@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-use-before-define */
 // Mettre le code JavaScript lié à la page photographer.html
 window.addEventListener(
   "keydown",
@@ -19,7 +21,7 @@ let media = []
 
 // eslint-disable-next-line import/prefer-default-export
 export async function getAllInformation() {
-  await fetch("./../../data/photographers.json")
+  await fetch("data/photographers.json")
     .then((response) => response.json())
     .then((data) => {
       photographer = data.photographers
@@ -96,6 +98,7 @@ function sortPhoto() {
     }
   })
 
+  // @ts-ignore
   const filterOption = dropdownBtn.innerText
 
   switch (filterOption) {
@@ -109,6 +112,7 @@ function sortPhoto() {
         const da = new Date(a.date)
         const db = new Date(b.date)
 
+        // @ts-ignore
         return db - da
       })
 
@@ -241,12 +245,13 @@ function likeCount() {
       const numberOfLike = document.querySelector(
         `.${cardIdPhoto} .counter-like`
       )
+      // @ts-ignore
       const baseLike = numberOfLike.innerText
 
       // creer et/ou incremente
       if (
         locStorageIdPhoto &&
-        localStorage.getItem(`clicked-${cardIdPhoto}`) == "true"
+        localStorage.getItem(`clicked-${cardIdPhoto}`) === "true"
       ) {
         localStorage.setItem(`${cardIdPhoto}`, `${Number(baseLike) - 1}`)
         localStorage.setItem(`clicked-${cardIdPhoto}`, "false")
@@ -257,11 +262,13 @@ function likeCount() {
       // refresh valeur du localstorage
       locStorageIdPhoto = localStorage.getItem(`${cardIdPhoto}`)
       // show new value
+      // @ts-ignore
       numberOfLike.innerText = locStorageIdPhoto
     }
 
     heart.addEventListener("click", likeAdd)
     heart.addEventListener("keydown", (e) => {
+      // @ts-ignore
       if (e.key === "Enter") {
         likeAdd()
       }
@@ -307,18 +314,24 @@ document.getElementById("dropdown").addEventListener("keydown", (e) => {
 
   if (e.key === "ArrowDown") {
     if (document.activeElement === lastFocusableElement) {
+      // @ts-ignore
       firstFocusableElement.focus()
     } else if (document.activeElement === secondFocusableElement) {
+      // @ts-ignore
       lastFocusableElement.focus()
     } else {
+      // @ts-ignore
       secondFocusableElement.focus()
     }
   } else if (e.key === "ArrowUp") {
     if (document.activeElement === firstFocusableElement) {
+      // @ts-ignore
       lastFocusableElement.focus()
     } else if (document.activeElement === secondFocusableElement) {
+      // @ts-ignore
       firstFocusableElement.focus()
     } else {
+      // @ts-ignore
       secondFocusableElement.focus()
     }
   }
@@ -333,6 +346,7 @@ document.getElementById("dropdown").addEventListener("keydown", (e) => {
 
 dropdownBtn.addEventListener("click", animationDropdown)
 dropdownBtn.addEventListener("keydown", (e) => {
+  // @ts-ignore
   if (e.key === "Enter") {
     animationDropdown()
   }
@@ -345,8 +359,11 @@ const textSelected = document.querySelector(".text-selected")
 
 dropdownItem.forEach((item) => {
   function selectedFilter() {
+    // @ts-ignore
     const temp = textSelected.innerText
+    // @ts-ignore
     textSelected.innerText = item.innerText
+    // @ts-ignore
     item.innerText = temp
     animationDropdown()
     sortPhoto()
@@ -355,6 +372,7 @@ dropdownItem.forEach((item) => {
   }
   item.addEventListener("click", selectedFilter)
   item.addEventListener("keydown", (e) => {
+    // @ts-ignore
     if (e.key === "Enter") {
       selectedFilter()
     }
@@ -372,6 +390,7 @@ let content
 
 function displayContentSlider(content) {
   // reset lightboxContent
+  // @ts-ignore
   lightboxContent.innerText = ""
 
   // clone the content
@@ -421,6 +440,7 @@ function openLightbox() {
   photos.forEach((photo) => {
     function showLightBox() {
       // show lightbox
+      // @ts-ignore
       lightboxPhoto.style.display = "block"
       main.setAttribute("aria-hidden", "true")
       header.setAttribute("aria-hidden", "true")
@@ -438,6 +458,7 @@ function openLightbox() {
     photo.addEventListener("click", showLightBox)
 
     photo.addEventListener("keydown", (e) => {
+      // @ts-ignore
       if (e.key === "Enter") {
         showLightBox()
       }
@@ -449,6 +470,7 @@ function exitLightbox() {
   exitBtn.addEventListener("click", () => {
     nextBtn.classList.remove("disable-click")
     prevBtn.classList.remove("disable-click")
+    // @ts-ignore
     lightboxPhoto.style.display = "none"
     main.setAttribute("aria-hidden", "false")
     header.setAttribute("aria-hidden", "false")
@@ -461,6 +483,7 @@ function exitLightbox() {
     if (e.key === "Escape") {
       nextBtn.classList.remove("disable-click")
       prevBtn.classList.remove("disable-click")
+      // @ts-ignore
       lightboxPhoto.style.display = "none"
       main.setAttribute("aria-hidden", "false")
       header.setAttribute("aria-hidden", "false")
