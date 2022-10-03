@@ -149,11 +149,9 @@ function displayMedia() {
   gallery.innerHTML = ""
 
   const arrayToDisplay = sortPhoto()
-  let pricePhotograph
 
   arrayToDisplay.map((item) => {
     const { image, video, title, likes, price } = item
-    pricePhotograph = price
     const idPhoto = item.id
     const srcImg = photographer[0].name
     const srcImgFirstName = srcImg.split(" ")[0]
@@ -184,13 +182,13 @@ function displayMedia() {
 
     if (image !== undefined) {
       const img = document.createElement("img")
-      img.setAttribute("src", `../../assets/images/${srcImgFirstName}/${image}`)
+      img.setAttribute("src", `assets/images/${srcImgFirstName}/${image}`)
       img.setAttribute("alt", `${title}, image closeup view`)
       img.setAttribute("tabindex", "0")
       article.appendChild(img)
     } else {
       const videoDiv = document.createElement("video")
-      videoDiv.src = `../../assets/images/${srcImgFirstName}/${video}#t=0.5`
+      videoDiv.src = `assets/images/${srcImgFirstName}/${video}#t=0.5`
       videoDiv.controls = true
       videoDiv.preload = "metadata"
       videoDiv.setAttribute("alt", `${title}, video closeup view`)
@@ -200,6 +198,17 @@ function displayMedia() {
     article.appendChild(divDescriptionImg)
     divDescriptionImg.appendChild(imgTitleText)
     divDescriptionImg.appendChild(spanNbLike)
+  })
+
+  openLightbox()
+}
+
+function sumOfLikeDisplay() {
+  const arrayToDisplay = sortPhoto()
+  let pricePhotograph
+  arrayToDisplay.map((item) => {
+    const { price } = item
+    pricePhotograph = price
   })
 
   const sectionPriceAndLike = document.createElement("div")
@@ -226,8 +235,6 @@ function displayMedia() {
   photographMedia.appendChild(sectionPriceAndLike)
   sectionPriceAndLike.appendChild(divLike)
   sectionPriceAndLike.appendChild(divPrice)
-
-  openLightbox()
 }
 
 // like incrementation
@@ -264,6 +271,7 @@ function likeCount() {
       // show new value
       // @ts-ignore
       numberOfLike.innerText = locStorageIdPhoto
+      sumOfLikeDisplay()
     }
 
     heart.addEventListener("click", likeAdd)
@@ -552,5 +560,6 @@ window.addEventListener("load", async () => {
   sortPhoto()
   displayMedia()
   likeCount()
+  sumOfLikeDisplay()
   exitLightbox()
 })
